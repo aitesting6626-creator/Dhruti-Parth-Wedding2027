@@ -3,22 +3,102 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>Dhruti &amp; Parth's Wedding RSVP</title>
-  <meta property="og:title" content="Dhruti &amp; Parth's Wedding RSVP — Jan 17, 2027" />
-  <meta property="og:description" content="Tap your personal invitation link to confirm your family's attendance." />
+  <title>Dhruti &amp; Parth's Wedding Invitation</title>
+  <meta property="og:title" content="Dhruti &amp; Parth's Wedding — Sunday, Jan 17, 2027" />
+  <meta property="og:description" content="Tap to view your invitation and confirm your family's RSVP." />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { width: 100%; height: 100%; overflow: hidden; background: #fdf8f6; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    html, body { width: 100%; height: 100%; background: #4a0e17; }
+
+    /* Screen 1: Wedding Invitation Card */
+    #inviteScreen {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: radial-gradient(circle at top, #6b1422, #380910);
+    }
+    .invite-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+      border: 2px solid #d4af37;
+    }
+    .invite-wrapper img {
+      width: 100%;
+      display: block;
+    }
+    /* Invisible clickable hotspot over the 'TAP TO RSVP' button on the image */
+    .hotspot-btn {
+      position: absolute;
+      bottom: 6%;
+      left: 15%;
+      width: 70%;
+      height: 11%;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+    /* Backup solid gold button below the card for extra clarity */
+    .rsvp-cta {
+      margin-top: 14px;
+      width: 100%;
+      max-width: 440px;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #f6d365, #fda085);
+      color: #380910;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Screen 2: Google Apps Script RSVP Form */
+    #rsvpScreen {
+      display: none;
+      width: 100%;
+      height: 100vh;
+      background: #fdf8f6;
+    }
     iframe { width: 100%; height: 100%; border: none; display: block; }
   </style>
 </head>
 <body>
-  <iframe id="rsvpFrame" title="Dhruti and Parth Wedding RSVP"></iframe>
+
+  <!-- Step 1: Fancy Wedding Card View -->
+  <div id="inviteScreen">
+    <div class="invite-wrapper">
+      <img src="invite.jpg" alt="Dhruti & Parth Wedding Invitation - January 17, 2027" />
+      <button class="hotspot-btn" onclick="openRsvp()" aria-label="Tap to RSVP"></button>
+    </div>
+    <button class="rsvp-cta" onclick="openRsvp()">Tap Here to Confirm RSVP &rarr;</button>
+  </div>
+
+  <!-- Step 2: Personalized RSVP Form -->
+  <div id="rsvpScreen">
+    <iframe id="rsvpFrame" title="Dhruti and Parth Wedding RSVP"></iframe>
+  </div>
+
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwafGM7QNT__WxYD1GHt311enpr-Kn1cMKxLzj_xDlZZzxDUDZlJlUCviFf5O550HI/exec";
     const params = new URLSearchParams(window.location.search);
     const guestId = params.get("guest") || params.get("id") || "";
+
+    // Preload the RSVP form in the background so it opens instantly on click
     document.getElementById("rsvpFrame").src = SCRIPT_URL + (guestId ? "?id=" + encodeURIComponent(guestId) : "");
+
+    function openRsvp() {
+      document.getElementById("inviteScreen").style.display = "none";
+      document.getElementById("rsvpScreen").style.display = "block";
+    }
   </script>
 </body>
 </html>
