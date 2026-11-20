@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Dhruti &amp; Parth's Wedding RSVP</title>
+  <meta property="og:title" content="Dhruti &amp; Parth's Wedding RSVP — Jan 17, 2027" />
+  <meta property="og:description" content="Tap your personal invitation link to confirm your family's attendance." />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #fdf8f6; }
+    iframe { width: 100%; height: 100%; border: none; display: block; }
+  </style>
+</head>
+<body>
+  <iframe id="rsvpFrame" title="Dhruti and Parth Wedding RSVP"></iframe>
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwafGM7QNT__WxYD1GHt311enpr-Kn1cMKxLzj_xDlZZzxDUDZlJlUCviFf5O550HI/exec";
+    const params = new URLSearchParams(window.location.search);
+    const guestId = params.get("guest") || params.get("id") || "";
+    document.getElementById("rsvpFrame").src = SCRIPT_URL + (guestId ? "?id=" + encodeURIComponent(guestId) : "");
+  </script>
+</body>
+</html>
